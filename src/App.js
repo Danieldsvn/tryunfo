@@ -53,10 +53,10 @@ class App extends React.Component {
 
   saveForm = (event) => {
     const card = this.state;
-    const trunfoExist = card.savedCards.some((trunfoCard) => trunfoCard.cardTrunfo === true);     
+    const trunfoExist = card.savedCards.some((trunfoCard) => trunfoCard.cardTrunfo);
     this.setState((prevState) => ({
-      savedCards: [...prevState.savedCards, card], 
-      trunfo: trunfoExist,     
+      savedCards: [...prevState.savedCards, card],
+      trunfo: trunfoExist,
     }), this.setState({
       cardName: '',
       cardDescription: '',
@@ -65,7 +65,7 @@ class App extends React.Component {
       cardAttr3: '0',
       cardImage: '',
       cardRare: 'normal',
-      cardTrunfo: false,      
+      cardTrunfo: false,
     }));
     event.preventDefault();
     console.log(this);
