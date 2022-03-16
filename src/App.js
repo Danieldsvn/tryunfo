@@ -48,16 +48,11 @@ class App extends React.Component {
     const disabled = validations.some((validation) => validation === true);
     this.setState({
       isSaveButtonDisabled: disabled,
-    });
+    });    
   }
 
-  saveForm = (event) => {
-    const card = this.state;
-    const trunfoExist = card.savedCards.some((trunfoCard) => trunfoCard.cardTrunfo);
-    this.setState((prevState) => ({
-      savedCards: [...prevState.savedCards, card],
-      trunfo: trunfoExist,
-    }), this.setState({
+  resetStatesDefault = () => {
+    this.setState({
       cardName: '',
       cardDescription: '',
       cardAttr1: '0',
@@ -66,10 +61,21 @@ class App extends React.Component {
       cardImage: '',
       cardRare: 'normal',
       cardTrunfo: false,
-    }));
-    event.preventDefault();
-    console.log(this);
+      isSaveButtonDisabled: true,
+    });
   }
+
+  saveForm = (event) => {
+    const card = this.state
+    const trunfoExist = card.savedCards.some((trunfoCard) => trunfoCard.cardTrunfo);
+    this.setState((prevState) => ({
+      savedCards: [...prevState.savedCards, card],
+      trunfo: trunfoExist,
+    }), this.resetStatesDefault);
+    event.preventDefault();    
+  }
+
+ 
 
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
