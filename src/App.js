@@ -15,7 +15,7 @@ class App extends React.Component {
       cardRare: 'normal',
       cardTrunfo: false,
       isSaveButtonDisabled: true,
-      savedCards: [],
+      deck: [],
       trunfo: false,
     };
   }
@@ -53,7 +53,7 @@ class App extends React.Component {
 
   resetStatesDefault = () => {
     const card = this.state;
-    const trunfoExist = card.savedCards.some((trunfoCard) => trunfoCard.cardTrunfo);
+    const trunfoExist = card.deck.some((trunfoCard) => trunfoCard.cardTrunfo);
     this.setState({
       cardName: '',
       cardDescription: '',
@@ -71,15 +71,25 @@ class App extends React.Component {
   saveForm = (event) => {
     const card = this.state;
     this.setState((prevState) => ({
-      savedCards: [...prevState.savedCards, card],
+      deck: [...prevState.deck, card],
     }), this.resetStatesDefault);
     event.preventDefault();
+  }
+
+  handleDeleteButton = (event) => {
+    const indexCard = Number(event.target.id);
+    const { deck } = this.state;
+    const strCard = JSON.stringify(deck[indexCard]);
+    const cards = deck.filter((card, index) => strCard === JSON.stringify(card[index]));    
+    this.setState({
+      deck: cards,
+    }, this.resetStatesDefault);
   }
 
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo,
-      isSaveButtonDisabled, trunfo, savedCards } = this.state;
+      isSaveButtonDisabled, trunfo, deck } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -108,18 +118,28 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
         />
         <div>
-          { savedCards.map((savedCard) => (
-            <Card
-              key={ savedCard.cardName }
-              cardName={ savedCard.cardName }
-              cardDescription={ savedCard.cardDescription }
-              cardAttr1={ savedCard.cardAttr1 }
-              cardAttr2={ savedCard.cardAttr2 }
-              cardAttr3={ savedCard.cardAttr3 }
-              cardImage={ savedCard.cardImage }
-              cardRare={ savedCard.cardRare }
-              cardTrunfo={ savedCard.cardTrunfo }
-            />)) }
+          { deck.map((savedCard, index) => (
+            <div key={ index }>
+              <Card
+                cardName={ savedCard.cardName }
+                cardDescription={ savedCard.cardDescription }
+                cardAttr1={ savedCard.cardAttr1 }
+                cardAttr2={ savedCard.cardAttr2 }
+                cardAttr3={ savedCard.cardAttr3 }
+                cardImage={ savedCard.cardImage }
+                cardRare={ savedCard.cardRare }
+                cardTrunfo={ savedCard.cardTrunfo }
+              />
+              <button
+                type="button"
+                data-testid="delete-button"
+                id={ index }
+                onClick={ this.handleDeleteButton }
+              >
+                Excluir
+              </button>
+            </div>
+          )) }
         </div>
       </div>
     );
