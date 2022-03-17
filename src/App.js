@@ -80,7 +80,7 @@ class App extends React.Component {
     const indexCard = Number(event.target.id);
     const { deck } = this.state;
     const strCard = JSON.stringify(deck[indexCard]);
-    const cards = deck.filter((card, index) => strCard === JSON.stringify(card[index]));    
+    const cards = deck.filter((card, ind) => strCard === JSON.stringify(card[ind]));
     this.setState({
       deck: cards,
     }, this.resetStatesDefault);
