@@ -79,8 +79,7 @@ class App extends React.Component {
   handleDeleteButton = (event) => {
     const indexCard = Number(event.target.id);
     const { deck } = this.state;
-    const strCard = JSON.stringify(deck[indexCard]);
-    const cards = deck.filter((card, ind) => strCard === JSON.stringify(card[ind]));
+    const cards = deck.filter((_card, index) => index !== indexCard);
     this.setState({
       deck: cards,
     }, this.resetStatesDefault);
