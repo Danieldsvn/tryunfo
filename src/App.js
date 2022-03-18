@@ -74,7 +74,7 @@ class App extends React.Component {
     const card = this.state;
     this.setState((prevState) => ({
       deck: [...prevState.deck, card],
-      filteredDeck: [...prevState.filteredDeck, card]
+      filteredDeck: [...prevState.filteredDeck, card],
     }), this.resetStatesDefault);
     event.preventDefault();
   }
