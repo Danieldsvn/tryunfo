@@ -5,7 +5,7 @@ class Form extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick } = this.props;
+      onInputChange, onSaveButtonClick, searchName } = this.props;
     const noTrunfo = (
       <label htmlFor="super-trunfo">
         É super Super Trunfo?
@@ -110,6 +110,17 @@ class Form extends React.Component {
         >
           Salvar
         </button>
+        <label htmlFor="search-by-name">
+          Pesquisar carta
+          <input
+            name="searchName"
+            type="text"
+            data-testid="name-filter"
+            id="search-by-name"
+            value={ searchName }
+            onChange={ onInputChange }
+          />
+        </label>
       </form>
     );
   }

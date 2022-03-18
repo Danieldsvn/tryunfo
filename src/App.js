@@ -15,8 +15,9 @@ class App extends React.Component {
       cardRare: 'normal',
       cardTrunfo: false,
       isSaveButtonDisabled: true,
-      deck: [],
+      deck: [],      
       trunfo: false,
+      searchName: '',
     };
   }
 
@@ -85,10 +86,15 @@ class App extends React.Component {
     }, this.resetStatesDefault);
   }
 
+  filterSearch = () => {
+    const { deck, searchName } = this.state;
+     return deck.cardName.includes(searchName)
+  }
+  
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo,
-      isSaveButtonDisabled, trunfo, deck } = this.state;
+      cardImage, cardRare, cardTrunfo, searchName,
+      isSaveButtonDisabled, trunfo, deck } = this.state;      
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -105,8 +111,9 @@ class App extends React.Component {
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onSaveButtonClick={ this.saveForm }
           hasTrunfo={ trunfo }
+          searchName={ searchName }
         />
-        <Card
+        <Card          
           cardName={ cardName }
           cardDescription={ cardDescription }
           cardAttr1={ cardAttr1 }
@@ -115,6 +122,7 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
+          isPreviewCard={ true }
         />
         <div>
           { deck.map((savedCard, index) => (
@@ -128,15 +136,10 @@ class App extends React.Component {
                 cardImage={ savedCard.cardImage }
                 cardRare={ savedCard.cardRare }
                 cardTrunfo={ savedCard.cardTrunfo }
-              />
-              <button
-                type="button"
-                data-testid="delete-button"
-                id={ index }
-                onClick={ this.handleDeleteButton }
-              >
-                Excluir
-              </button>
+                isPreviewCard={ false }
+                deleteCard={ this.handleDeleteButton }
+                id= { index }
+              />              
             </div>
           )) }
         </div>

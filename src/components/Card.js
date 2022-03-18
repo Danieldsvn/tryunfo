@@ -4,7 +4,17 @@ import PropTypes from 'prop-types';
 class Card extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo } = this.props;
+      cardImage, cardRare, cardTrunfo, isPreviewCard, deleteCard, id } = this.props;
+      const deleteButton = (
+      <button
+        type="button"
+        data-testid="delete-button"
+        id={ id }
+        onClick={ deleteCard }
+      >
+        Excluir
+      </button>
+      )
     return (
       <div>
         <h2 data-testid="name-card">{ cardName }</h2>
@@ -18,6 +28,9 @@ class Card extends React.Component {
         <p data-testid="rare-card">{ cardRare }</p>
         {
           cardTrunfo ? <p data-testid="trunfo-card">Super Trunfo</p> : <p />
+        }
+        {
+          isPreviewCard ? <p /> : deleteButton
         }
       </div>
     );
