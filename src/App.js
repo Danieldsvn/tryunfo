@@ -19,6 +19,7 @@ class App extends React.Component {
       filteredDeck: [],
       trunfo: false,
       searchName: '',
+      searchRare: 'todas',
     };
   }
 
@@ -89,23 +90,29 @@ class App extends React.Component {
   }
 
   filterSearch = () => {
-    const { deck, searchName } = this.state;
-    const filteredDeck = deck.filter((card) => card.cardName.includes(searchName));
+    const { deck, searchName, searchRare } = this.state;
+    let filteredDeck = [];
+    if (searchRare === 'todas') {
+      filteredDeck = deck.filter((card) => card.cardName.includes(searchName));
+    } else {
+      filteredDeck = deck.filter((card) => card.cardName.includes(searchName)
+     && card.cardRare === searchRare);
+    }
     this.setState({
       filteredDeck: [...filteredDeck],
     });
   }
 
   handleSearchChange = ({ target }) => {
-    const { value } = target;
+    const { name, value } = target;
     this.setState({
-      searchName: value,
+      [name]: value,
     }, this.filterSearch);
   }
 
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo, searchName,
+      cardImage, cardRare, cardTrunfo, searchName, searchRare,
       isSaveButtonDisabled, trunfo, filteredDeck } = this.state;
     return (
       <div>
@@ -124,6 +131,7 @@ class App extends React.Component {
           onSaveButtonClick={ this.saveForm }
           hasTrunfo={ trunfo }
           searchName={ searchName }
+          searchRare={ searchRare }
           onSearchChange={ this.handleSearchChange }
         />
         <Card

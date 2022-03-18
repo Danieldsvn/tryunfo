@@ -5,7 +5,8 @@ class Form extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick, searchName, onSearchChange } = this.props;
+      onInputChange, onSaveButtonClick, searchName,
+      searchRare, onSearchChange } = this.props;
     const noTrunfo = (
       <label htmlFor="super-trunfo">
         É super Super Trunfo?
@@ -111,7 +112,7 @@ class Form extends React.Component {
           Salvar
         </button>
         <label htmlFor="search-by-name">
-          Pesquisar carta
+          Filtrar nome
           <input
             name="searchName"
             type="text"
@@ -120,6 +121,21 @@ class Form extends React.Component {
             value={ searchName }
             onChange={ onSearchChange }
           />
+        </label>
+        <label htmlFor="search-by-rare">
+          Filtrar raridade
+          <select
+            name="searchRare"
+            data-testid="rare-filter"
+            id="search-by-rare"
+            value={ searchRare }
+            onChange={ onSearchChange }
+          >
+            <option>todas</option>
+            <option>normal</option>
+            <option>raro</option>
+            <option>muito raro</option>
+          </select>
         </label>
       </form>
     );
@@ -140,6 +156,7 @@ Form.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
   searchName: PropTypes.string.isRequired,
+  searchRare: PropTypes.string.isRequired,
   onSearchChange: PropTypes.func.isRequired,
 };
 
