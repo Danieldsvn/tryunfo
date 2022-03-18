@@ -5,7 +5,7 @@ class Card extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, isPreviewCard, deleteCard, id } = this.props;
-      const deleteButton = (
+    const deleteButton = (
       <button
         type="button"
         data-testid="delete-button"
@@ -14,7 +14,7 @@ class Card extends React.Component {
       >
         Excluir
       </button>
-      )
+    );
     return (
       <div>
         <h2 data-testid="name-card">{ cardName }</h2>
@@ -46,6 +46,9 @@ Card.propTypes = {
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
+  isPreviewCard: PropTypes.bool.isRequired,
+  deleteCard: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default Card;

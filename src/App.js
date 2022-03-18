@@ -15,7 +15,8 @@ class App extends React.Component {
       cardRare: 'normal',
       cardTrunfo: false,
       isSaveButtonDisabled: true,
-      deck: [],      
+      deck: [],
+      filteredDeck: [],
       trunfo: false,
       searchName: '',
     };
@@ -54,7 +55,7 @@ class App extends React.Component {
 
   resetStatesDefault = () => {
     const card = this.state;
-    const trunfoExist = card.deck.some((trunfoCard) => trunfoCard.cardTrunfo);
+    const trunfoExist = card.filteredDeck.some((trunfoCard) => trunfoCard.cardTrunfo);
     this.setState({
       cardName: '',
       cardDescription: '',
@@ -73,28 +74,39 @@ class App extends React.Component {
     const card = this.state;
     this.setState((prevState) => ({
       deck: [...prevState.deck, card],
+      filteredDeck: [...prevState.filteredDeck, card]
     }), this.resetStatesDefault);
     event.preventDefault();
   }
 
   handleDeleteButton = (event) => {
     const indexCard = Number(event.target.id);
-    const { deck } = this.state;
-    const cards = deck.filter((_card, index) => index !== indexCard);
+    const { filteredDeck } = this.state;
+    const cards = filteredDeck.filter((_card, index) => index !== indexCard);
     this.setState({
-      deck: cards,
+      filteredDeck: cards,
     }, this.resetStatesDefault);
   }
 
   filterSearch = () => {
     const { deck, searchName } = this.state;
-     return deck.cardName.includes(searchName)
+    const filteredDeck = deck.filter((card) => card.cardName.includes(searchName));
+    this.setState({
+      filteredDeck: [...filteredDeck],
+    });
   }
-  
+
+  handleSearchChange = ({ target }) => {
+    const { value } = target;
+    this.setState({
+      searchName: value,
+    }, this.filterSearch);
+  }
+
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, searchName,
-      isSaveButtonDisabled, trunfo, deck } = this.state;      
+      isSaveButtonDisabled, trunfo, filteredDeck } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -112,8 +124,9 @@ class App extends React.Component {
           onSaveButtonClick={ this.saveForm }
           hasTrunfo={ trunfo }
           searchName={ searchName }
+          onSearchChange={ this.handleSearchChange }
         />
-        <Card          
+        <Card
           cardName={ cardName }
           cardDescription={ cardDescription }
           cardAttr1={ cardAttr1 }
@@ -122,10 +135,12 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
-          isPreviewCard={ true }
+          isPreviewCard
+          // deleteCard={ this.handleDeleteButton }
+          // id={ 0 }
         />
         <div>
-          { deck.map((savedCard, index) => (
+          { filteredDeck.map((savedCard, index) => (
             <div key={ index }>
               <Card
                 cardName={ savedCard.cardName }
@@ -138,8 +153,8 @@ class App extends React.Component {
                 cardTrunfo={ savedCard.cardTrunfo }
                 isPreviewCard={ false }
                 deleteCard={ this.handleDeleteButton }
-                id= { index }
-              />              
+                id={ index }
+              />
             </div>
           )) }
         </div>

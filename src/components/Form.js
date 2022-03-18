@@ -5,7 +5,7 @@ class Form extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick, searchName } = this.props;
+      onInputChange, onSaveButtonClick, searchName, onSearchChange } = this.props;
     const noTrunfo = (
       <label htmlFor="super-trunfo">
         É super Super Trunfo?
@@ -118,7 +118,7 @@ class Form extends React.Component {
             data-testid="name-filter"
             id="search-by-name"
             value={ searchName }
-            onChange={ onInputChange }
+            onChange={ onSearchChange }
           />
         </label>
       </form>
@@ -139,6 +139,8 @@ Form.propTypes = {
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
+  searchName: PropTypes.string.isRequired,
+  onSearchChange: PropTypes.func.isRequired,
 };
 
 export default Form;
