@@ -34,4 +34,4 @@ Os arquivos do diretório `.src/components` e o arquivo `.src/App.js`
 
 ## Como visualizar:
 
-Para executar o projeto faça o clone do repositório, entre na pasta do projeto execute o comando `npm start` para visualizar a aplicação no navegador Chrome!
+Para executar o projeto faça o clone do repositório, entre na pasta do projeto execute o comando `npm install` e depois `npm start` para visualizar a aplicação no navegador Chrome!
